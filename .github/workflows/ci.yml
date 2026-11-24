@@ -9,9 +9,20 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
+        id: python
         with:
           python-version: '3.12'
-      - run: pip install -r requirements.txt
+      - name: Restore dependency wheels
+        id: wheels
+        uses: actions/cache@v4
+        with:
+          path: .wheels
+          key: wheels-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'requirements.lock') }}
+      - name: Download wheels on cache miss
+        if: steps.wheels.outputs.cache-hit != 'true'
+        run: python -m pip download --only-binary=:all: -r requirements.txt -r requirements.lock -d .wheels
+      - name: Install from wheels
+        run: python -m pip install --no-index --find-links=.wheels -r requirements.txt -r requirements.lock
       - name: Run tests
         run: |
           set -o pipefail
