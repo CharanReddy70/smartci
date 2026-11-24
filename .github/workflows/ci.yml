@@ -41,4 +41,6 @@ jobs:
         run: bash scripts/run_log_model.sh build.log >> "$GITHUB_STEP_SUMMARY"
       - name: Replay the recorded failure with the local LLM
         if: github.event_name == 'workflow_dispatch' && success()
-        run: bash scripts/run_log_model.sh evidence/4-4/failed-pytest.log >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          set -o pipefail
+          bash scripts/run_log_model.sh evidence/4-4/failed-pytest.log | tee -a "$GITHUB_STEP_SUMMARY"
