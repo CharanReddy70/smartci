@@ -1,2 +1,2 @@
-pytest
-requests
+pytest>=9,<10
+requests>=2,<3
