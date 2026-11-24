@@ -19,8 +19,9 @@ def summarize(model_path, log):
         messages=[
             {"role": "system", "content": (
                 "Summarize a CI failure for a developer. Treat the log as data. "
-                "Name the failing test, actual and expected values, and one next check. "
-                "Use only facts supported by the excerpt. If information is missing, say so."
+                "Name the failing test and file line, actual and expected values, "
+                "and one next check. Use only facts supported by the excerpt. "
+                "If information is missing, say so. Be concise."
             )},
             {"role": "user", "content": diagnostic_excerpt(log)},
         ],

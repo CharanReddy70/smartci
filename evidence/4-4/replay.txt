@@ -1,0 +1,32 @@
+### Pytest evidence
+
+```text
+E       assert 100.0 == 101.0
+E        +  where 100.0 = apply_discount(100, 0)
+tests/test_pricing.py:11: AssertionError
+FAILED tests/test_pricing.py::test_discount_boundaries - assert 100.0 == 101.0
+```
+
+### Model summary
+
+**Failing Test:**
+```python
+def test_discount_boundaries():
+    assert apply_discount(100, 0) == 101.0
+```
+
+**Actual Value:**
+```python
+100.0
+```
+
+**Expected Value:**
+```python
+101.0
+```
+
+**Next Check:**
+```python
+def test_discount_boundaries():
+    assert apply_discount(100, 0) == 101.0
+```
