@@ -20,7 +20,8 @@ jobs:
           key: wheels-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'requirements.lock') }}
       - name: Download wheels on cache miss
         if: steps.wheels.outputs.cache-hit != 'true'
-        run: python -m pip download --only-binary=:all: -r requirements.txt -r requirements.lock -d .wheels
+        run: >-
+          python -m pip download --only-binary=:all: -r requirements.txt -r requirements.lock -d .wheels
       - name: Install from wheels
         run: python -m pip install --no-index --find-links=.wheels -r requirements.txt -r requirements.lock
       - name: Run tests
